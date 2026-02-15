@@ -57,7 +57,7 @@ def create_agent_response(system_prompt, message):
         ]
     )
 
-    return response.output[0].content[0].text
+    return response.choices[0].message.content
 
 
 # -------- BUTTON ACTION --------
@@ -236,5 +236,6 @@ Do NOT repeat previous answers.
         st.write(candidate_answer)
 
         conversation_history += f"\nCandidate: {candidate_answer}\n"
+
 
 
