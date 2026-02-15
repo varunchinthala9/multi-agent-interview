@@ -36,7 +36,7 @@ interviewer_text = st.text_area("Interviewer Info")
 
 st.header("Settings")
 
-rounds = st.number_input("Number of rounds", min_value=1, max_value=10, value=3)
+num_questions = st.number_input("Number of Questions", min_value=1, max_value=10, value=3)
 
 
 # -------- AGENT FUNCTION --------
@@ -164,7 +164,7 @@ Interview structure:
 
     # -------- Interview loop --------
 
-    for i in range(rounds):
+    for i in range(num_questions):
 
         phase_index = min(i, len(interview_phases) - 1)
         current_phase = interview_phases[phase_index]
@@ -211,7 +211,7 @@ Important rules:
             interviewer_input
         )
 
-        st.markdown(f"**Interviewer (Round {i+1}):**")
+        st.markdown(f"**Interviewer (Question {i+1}):**")
         st.write(interviewer_question)
 
         conversation_history += f"\nInterviewer: {interviewer_question}\n"
@@ -229,7 +229,7 @@ Do NOT repeat previous answers.
             candidate_input
         )
 
-        st.markdown(f"**Candidate (Round {i+1}):**")
+        st.markdown(f"**Candidate (Answer {i+1}):**")
         st.write(candidate_answer)
 
         conversation_history += f"\nCandidate: {candidate_answer}\n"
