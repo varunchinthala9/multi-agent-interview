@@ -49,9 +49,12 @@ def create_agent_response(system_prompt, message):
 {message}
 """
 
-    response = client.responses.create(
+    response = client.chat.completions.create(
         model="gpt-5-nano",
-        input=full_input
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": message}
+        ]
     )
 
     return response.output[0].content[0].text
@@ -233,4 +236,5 @@ Do NOT repeat previous answers.
         st.write(candidate_answer)
 
         conversation_history += f"\nCandidate: {candidate_answer}\n"
+
 
