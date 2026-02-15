@@ -3,10 +3,20 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
-# Load API key
+# Load API key (for local use)
 load_dotenv()
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# SAFE client initialization (works in Streamlit Cloud and locally)
+def get_openai_client():
+    if "OPENAI_API_KEY" in st.secrets:
+        return OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+    elif os.getenv("OPENAI_API_KEY"):
+        return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    else:
+        st.error("OpenAI API key not found. Please configure Secrets.")
+        st.stop()
+
+client = get_openai_client()
 
 st.title("Multi-Agent Interview Simulator")
 
@@ -223,4 +233,3 @@ Do NOT repeat previous answers.
         st.write(candidate_answer)
 
         conversation_history += f"\nCandidate: {candidate_answer}\n"
-
